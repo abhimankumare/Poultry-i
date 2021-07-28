@@ -9,7 +9,7 @@
 
     <ImageView
         android:scaleType="fitXY"
-        android:src="@drawable/splashscreen1"
+        android:src="@drawable/poltry_splash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

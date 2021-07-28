@@ -7,6 +7,7 @@ import android.text.Html
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.example.poultry_i.activity.MainActivity
 import com.example.poultry_i.R
 import com.example.poultry_i.apiclient.ApiInterface
+import com.example.poultry_i.common.Utils
 import com.example.poultry_i.model.Login
 import com.example.poultry_i.model.LoginResponse
 import com.example.poultry_i.storageHelpers.PreferenceHelper
@@ -39,6 +41,8 @@ class LoginActivity : AppCompatActivity() {
     var username: String? = null
     var useremail: String? = null
     var created_at: String? = null
+    lateinit var ll_login_root_view: LinearLayout
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +50,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.login_activity)
 
         btn_signin = findViewById(R.id.btn_signin)
+        ll_login_root_view = findViewById(R.id.ll_login_root_view)
         show_pass_btn = findViewById(R.id.show_pass_btn)
         ed_username = findViewById(R.id.ed_username)
         ed_password = findViewById(R.id.ed_password)
@@ -102,56 +107,72 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun signin(email: String, password: String) {
-        val retIn =
-            ApiInterface.RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
-        val signInInfo = Login(email, password)
-        retIn.login(signInInfo).enqueue(object : Callback<LoginResponse> {
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(
-                    this@LoginActivity,
-                    t.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-                progressBar.visibility = View.GONE
-            }
-
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-
-                if (response.code() == 200) {
+        if (Utils.isConnectingToInternet(this)) {
+            val retIn =
+                ApiInterface.RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
+            val signInInfo = Login(email, password)
+            retIn.login(signInInfo).enqueue(object : Callback<LoginResponse> {
+                override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        t.message,
+                        Toast.LENGTH_SHORT
+                    ).show()
                     progressBar.visibility = View.GONE
-                    val responseBody: LoginResponse? = response.body()
-                    if (responseBody != null) {
-                        token = responseBody.token.toString()
-                        username = responseBody.user!!.name.toString()
-                        useremail = responseBody.user!!.email.toString()
-                    }
-
-
-                    PreferenceHelper.setStringPreference(
-                        this@LoginActivity,
-                        "token",
-                        token
-                    )
-                    PreferenceHelper.setStringPreference(
-                        this@LoginActivity,
-                        "username",
-                        username
-                    )
-                    PreferenceHelper.setStringPreference(
-                        this@LoginActivity,
-                        "useremail",
-                        useremail
-                    )
-                    startact()
-                    Toast.makeText(this@LoginActivity, "Login successfully!", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    progressBar.visibility = View.GONE
-                    Toast.makeText(this@LoginActivity, response.message(), Toast.LENGTH_SHORT)
-                        .show()
                 }
-            }
-        })
+
+                override fun onResponse(
+                    call: Call<LoginResponse>,
+                    response: Response<LoginResponse>
+                ) {
+
+                    if (response.code() == 200) {
+                        progressBar.visibility = View.GONE
+                        val responseBody: LoginResponse? = response.body()
+                        if (responseBody != null) {
+                            token = responseBody.token.toString()
+                            username = responseBody.user!!.name.toString()
+                            useremail = responseBody.user!!.email.toString()
+                        }
+
+
+                        PreferenceHelper.setStringPreference(
+                            this@LoginActivity,
+                            "token",
+                            token
+                        )
+                        PreferenceHelper.setStringPreference(
+                            this@LoginActivity,
+                            "username",
+                            username
+                        )
+                        PreferenceHelper.setStringPreference(
+                            this@LoginActivity,
+                            "useremail",
+                            useremail
+                        )
+                        startact()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login successfully!",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    } else {
+                        progressBar.visibility = View.GONE
+                        Toast.makeText(this@LoginActivity, response.message(), Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            })
+        } else {
+            progressBar.visibility = View.GONE
+            Utils.showIndefiniteSnackBar(
+                ll_login_root_view,
+                "You're offline, Please check your network connection."
+            )
+
+        }
     }
 
     private fun startact() {
