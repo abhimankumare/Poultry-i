@@ -1,6 +1,7 @@
 package com.example.poultry_i.fragment
 
 import android.content.DialogInterface
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,14 +9,19 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TableRow
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.poultry_i.R
 import com.example.poultry_i.adapter.DataListAdapter
 import com.example.poultry_i.common.Utils
+import com.example.poultry_i.model.DataBatch
 import com.example.poultry_i.model.DataMachine
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,21 +29,29 @@ import com.example.poultry_i.model.DataMachine
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private lateinit var datalistAdapter: DataListAdapter
-lateinit var btn_adddetails: AppCompatButton
+lateinit var btn_saveetails: AppCompatButton
 lateinit var rv_detailsdata: RecyclerView
 lateinit var ll_dataform: LinearLayout
 lateinit var btn_submitdetails: AppCompatButton
-lateinit var ll_subdata: LinearLayout
+lateinit var sub_data_table: LinearLayout
 lateinit var tbrow: TableRow
 
-
+lateinit var button_addc: FloatingActionButton
 lateinit var et_nuofchicks: EditText
 lateinit var et_flockno: EditText
 lateinit var et_dateofplacement: EditText
 lateinit var et_pno: EditText
+lateinit var temp_data_Birds: LinearLayout
+lateinit var tv_birds: TextView
+lateinit var nuofchicks: TextView
+lateinit var flock: TextView
+lateinit var dateof: TextView
+lateinit var psno: TextView
+lateinit var no_data: TextView
 
 
-private val machineList = ArrayList<DataMachine>()
+
+private val batchList = ArrayList<DataBatch>()
 
 
 class DetailsListFragment : Fragment() {
@@ -60,7 +74,7 @@ class DetailsListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_details_list, container, false)
-        (activity as AppCompatActivity).supportActionBar?.title = "Details"
+        (activity as AppCompatActivity).supportActionBar?.title = "Batch List"
         initView(view)
         return view
     }
@@ -86,57 +100,107 @@ class DetailsListFragment : Fragment() {
     }
 
     fun initView(view: View) {
+
+        button_addc = view.findViewById(R.id.button_addc)
+        nuofchicks = view.findViewById(R.id.nuofchicks)
+        flock = view.findViewById(R.id.flock)
+        dateof = view.findViewById(R.id.dateof)
+        psno = view.findViewById(R.id.psno)
+        no_data = view.findViewById(R.id.no_data)
+        temp_data_Birds = view.findViewById(R.id.temp_data_Birds)
+        tv_birds = view.findViewById(R.id.tv_birds)
+
         btn_submitdetails = view.findViewById(R.id.btn_submitdetails)
-        btn_adddetails = view.findViewById(R.id.btn_adddetails)
+        btn_saveetails = view.findViewById(R.id.btn_saveetails)
         rv_detailsdata = view.findViewById(R.id.rv_detailsdata)
         ll_dataform = view.findViewById(R.id.ll_dataform)
-        ll_subdata = view.findViewById(R.id.ll_subdata)
+        sub_data_table = view.findViewById(R.id.sub_data_table)
         et_nuofchicks = view.findViewById(R.id.et_nuofchicks)
         et_flockno = view.findViewById(R.id.et_flockno)
         et_dateofplacement = view.findViewById(R.id.et_dateofplacement)
         et_pno = view.findViewById(R.id.et_pno)
         tbrow = view.findViewById(R.id.tbrow)
 
+        if(batchList.size != 0){
+            datalistAdapter = DataListAdapter(batchList)
+            val layoutManager = LinearLayoutManager(context)
+            rv_detailsdata.layoutManager = layoutManager
+            rv_detailsdata.itemAnimator = DefaultItemAnimator()
+            rv_detailsdata.adapter = datalistAdapter
+            datalistAdapter.notifyDataSetChanged()
+        }else{
+            no_data.visibility = View.VISIBLE
+        }
+
+
+        button_addc.setOnClickListener(View.OnClickListener {
+            rv_detailsdata.visibility = View.GONE
+            btn_saveetails.visibility = View.VISIBLE
+            ll_dataform.visibility = View.VISIBLE
+            button_addc.visibility = View.GONE
+            no_data.visibility = View.GONE
+
+        })
+
+
+
+
+        btn_saveetails.setOnClickListener(View.OnClickListener {
+            ll_dataform.visibility = View.GONE
+            nuofchicks.setText(et_nuofchicks.text.toString())
+            flock.setText(et_flockno.text.toString())
+            dateof.setText(et_dateofplacement.text.toString())
+            psno.setText(et_pno.text.toString())
+
+            val datalist = DataBatch(et_nuofchicks.text.toString(),
+                et_flockno.text.toString(),
+                et_dateofplacement.text.toString(),
+                et_pno.text.toString())
+
+            batchList.add(datalist)
+            
+            tv_birds.visibility = View.VISIBLE
+            temp_data_Birds.visibility = View.VISIBLE
+            sub_data_table.visibility = View.VISIBLE
+
+            btn_saveetails.visibility = View.GONE
+            btn_submitdetails.visibility = View.VISIBLE
+
+//            datalistAdapter = DataListAdapter(batchList)
+//            val layoutManager = LinearLayoutManager(context)
+//            rv_detailsdata.layoutManager = layoutManager
+//            rv_detailsdata.itemAnimator = DefaultItemAnimator()
+//            rv_detailsdata.adapter = datalistAdapter
+//            datalistAdapter.notifyDataSetChanged()
+
+
+//            Utils.showDialog1(
+//                "Do you want to add Table Row?",
+//                DialogInterface.OnClickListener { dialog, which ->
+//                    when (which) {
+//                        DialogInterface.BUTTON_POSITIVE -> {
+//                            val myLayout = view.findViewById(R.id.ll_dataform) as LinearLayout
+//                            val newLayout: View =
+//                                layoutInflater.inflate(R.layout.subdata_details_table, null, false)
+//                            myLayout.addView(newLayout)
+//                            dialog.dismiss()
+//                        }
+//
+//                    }
+//                }, requireContext()
+//            )
+
+        })
+
         btn_submitdetails.setOnClickListener(View.OnClickListener {
-
-            Utils.showDialog1(
-                "Do you want to add subdata?",
-                DialogInterface.OnClickListener { dialog, which ->
-                    when (which) {
-                        DialogInterface.BUTTON_POSITIVE -> {
-                            val myLayout = view.findViewById(R.id.ll_dataform) as LinearLayout
-                            val newLayout: View =
-                                layoutInflater.inflate(R.layout.subdata_details, null, false)
-                            myLayout.addView(newLayout)
-                            dialog.dismiss()
-                        }
-
-                    }
-                }, requireContext()
-            )
+            val myLayout = view.findViewById(R.id.sub_data_table) as LinearLayout
+            val newLayout: View =
+                layoutInflater.inflate(R.layout.subdata_details_table, null, false)
+            myLayout.addView(newLayout)
 
         })
 
 
-        btn_adddetails.setOnClickListener(View.OnClickListener {
-
-            Utils.showDialog1(
-                "Do you want to add Table Row?",
-                DialogInterface.OnClickListener { dialog, which ->
-                    when (which) {
-                        DialogInterface.BUTTON_POSITIVE -> {
-                            val myLayout = view.findViewById(R.id.ll_dataform) as LinearLayout
-                            val newLayout: View =
-                                layoutInflater.inflate(R.layout.subdata_details_table, null, false)
-                            myLayout.addView(newLayout)
-                            dialog.dismiss()
-                        }
-
-                    }
-                }, requireContext()
-            )
-
-        })
 //        ll_dataform.visibility = View.GONE
 //
 //        btn_adddetails.setOnClickListener(View.OnClickListener {
@@ -155,7 +219,7 @@ class DetailsListFragment : Fragment() {
 //        btn_submitdetails.setOnClickListener(View.OnClickListener {
 //
 //            val datalist = DataMachine(et_title.text.toString(), et_description.text.toString(), et_machinnumber.text.toString())
-//            machineList.add(datalist)
+//            batchList.add(datalist)
 //
 //            rv_detailsdata.visibility = View.VISIBLE
 //            btn_adddetails.visibility = View.VISIBLE
@@ -163,7 +227,7 @@ class DetailsListFragment : Fragment() {
 //            ll_dataform.visibility = View.GONE
 //
 //
-//            datalistAdapter = DataListAdapter(machineList)
+//            datalistAdapter = DataListAdapter(batchList)
 //            val layoutManager = LinearLayoutManager(context)
 //            rv_detailsdata.layoutManager = layoutManager
 //            rv_detailsdata.itemAnimator = DefaultItemAnimator()

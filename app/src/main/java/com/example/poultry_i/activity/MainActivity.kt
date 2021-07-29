@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var actionBarDrawerToggle: ActionBarDrawerToggle? = null
     lateinit var tv_username: TextView
      var name: String? = "asd"
-    var nameq: String? = "asdasxs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

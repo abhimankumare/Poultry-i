@@ -13,18 +13,19 @@
             android:weightSum="1">
 
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_weight="0.20"
                 android:layout_height="@dimen/margin40"
                 android:textSize="@dimen/margin12"
-                android:hint="@string/age"
+                android:text="@string/age"
+                android:textColor="@color/white"
                 android:fontFamily="@font/montserrat"
                 android:singleLine="true"
                 android:gravity="center"
-                android:background="@drawable/textview_background1" />
+                android:background="@drawable/textview_background_header" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_weight="0.20"
                 android:layout_height="@dimen/margin40"
@@ -32,10 +33,11 @@
                 android:gravity="center"
                 android:fontFamily="@font/montserrat"
                 android:singleLine="true"
-                android:hint="@string/avgweight"
-                android:background="@drawable/textview_background1" />
+                android:text="@string/avgweight"
+                android:textColor="@color/white"
+                android:background="@drawable/textview_background_header" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_weight="0.20"
                 android:layout_height="@dimen/margin40"
@@ -43,28 +45,31 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:fontFamily="@font/montserrat"
-                android:hint="@string/consumption"
-                android:background="@drawable/textview_background1" />
-            <EditText
+                android:text="@string/consumption"
+                android:textColor="@color/white"
+                android:background="@drawable/textview_background_header" />
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_weight="0.20"
                 android:layout_height="@dimen/margin40"
                 android:textSize="@dimen/margin12"
                 android:gravity="center"
                 android:singleLine="true"
-                android:hint="@string/mortality"
-                android:background="@drawable/textview_background1"
+                android:text="@string/mortality"
+                android:textColor="@color/white"
+                android:background="@drawable/textview_background_header"
                 android:fontFamily="@font/montserrat"/>
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_weight="0.20"
                 android:layout_height="@dimen/margin40"
                 android:textSize="@dimen/margin12"
                 android:gravity="center"
                 android:singleLine="true"
-                android:hint="@string/weightgain"
-                android:background="@drawable/textview_background1"
+                android:text="@string/weightgain"
+                android:textColor="@color/white"
+                android:background="@drawable/textview_background_header"
                 android:fontFamily="@font/montserrat"/>
         </TableRow>
 

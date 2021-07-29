@@ -33,9 +33,9 @@
     <string name="tips">Tips</string>
     <string name="machineno">Machine No</string>
     <string name="stepdayhr">Step Day HR</string>
-    <string name="tset">T in (Tset)</string>
-    <string name="rhset">Rh in (Rhset)</string>
-    <string name="fan">Fan (%)</string>
+    <string name="tset">Shed Temp</string>
+    <string name="rhset">Set Temp</string>
+    <string name="fan">Offset Temp</string>
 
     <string name="nuofchicks">Nu of Chicks</string>
     <string name="dateofplacement">Date of Placement</string>

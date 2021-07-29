@@ -1,37 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/textview_background"
     android:clickable="true"
-    android:focusable="true"
-    android:layout_margin="@dimen/margin8"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/margin8"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/margin8">
+    android:focusable="true">
 
-    <TextView
-        android:id="@+id/title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/color_blue"
-        android:textSize="16dp"
+        android:layout_margin="@dimen/margin8"
+        android:paddingBottom="@dimen/margin8"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/margin8"
+        android:background="@drawable/textview_background"
+        android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="0dp"
+        android:layout_weight="0.5"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat"
+        android:padding="@dimen/margin2"
+        android:text="@string/nuofchicks"
+        android:textSize="@dimen/margin14"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/subtitle"
+
+        <TextView
+            android:id="@+id/nuofchicks"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/margin2"
+            android:text="@string/nuofchicks"
+            android:textSize="@dimen/margin14"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title" />
+        android:weightSum="1"
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/machinnumber"
-        android:layout_width="wrap_content"
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/margin2"
+            android:text="@string/flockno"
+            android:textSize="@dimen/margin14"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/flock"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/margin2"
+            android:text="@string/flockno"
+            android:textSize="@dimen/margin14"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:textColor="@color/color_blue" />
+        android:weightSum="1"
+        android:orientation="horizontal">
 
-</RelativeLayout>
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/margin2"
+            android:text="@string/dateofplacement"
+            android:textSize="@dimen/margin14"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/dateof"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/margin2"
+            android:text="@string/dateofplacement"
+            android:textSize="@dimen/margin14"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/margin2"
+            android:text="@string/pno"
+            android:textSize="@dimen/margin14"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/psno"
+            android:textColor="@color/black"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat"
+            android:padding="@dimen/margin2"
+            android:text="@string/pno"
+            android:textSize="@dimen/margin14"/>
+
+    </LinearLayout>
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_editdetails"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin40"
+            android:layout_margin="@dimen/margin8"
+            android:background="@drawable/footer_backgroud"
+            android:fontFamily="@font/montserrat"
+            android:gravity="center"
+            android:text="Edit"
+            android:textColor="@color/white"
+            android:textSize="@dimen/margin15"
+            android:textStyle="bold"
+            android:visibility="visible" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
